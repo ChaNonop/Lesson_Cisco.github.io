@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เอกสารสรุปคำสั่งและโหมดการตั้งค่า Cisco Switch (Quick Reference)</title>
+    <link rel="stylesheet" href="../assets/style.css">
+    <style>
+        /* สไตล์พิเศษสำหรับเอกสารอ้างอิง */
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.6em;
+            font-size: 0.75em;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+            color: #fff;
+            background-color: var(--secondary-color);
+        }
+        .badge-priv { background-color: #e63946; }
+        .badge-config { background-color: #0d6efd; }
+        .badge-user { background-color: #6c757d; }
+        
+        @media print {
+            body { padding: 0; max-width: 100%; font-size: 12pt; }
+            .navigation, .footer { display: none; }
+            pre { border: 1px solid #ccc; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>เอกสารสรุปคำสั่ง Cisco Switch Quick Reference</h1>
+    <p>สรุปคำสั่ง คีย์ลัด และขั้นตอนด่วนสำหรับการตั้งค่าและกู้คืนรหัสผ่านสวิตช์ Cisco (สามารถพิมพ์หน้านี้เป็น PDF หรือกระดาษเพื่อใช้งานหน้างานได้)</p>
+
+    <h2>1. ระดับสิทธิ์และโหมดการตั้งค่า (CLI Prompts)</h2>
+    <ul>
+        <li><strong>User EXEC Mode</strong> <span class="badge badge-user">Switch&gt;</span>
+            <ul>
+                <li>ใช้สำหรับดูสถานะทั่วไปเบื้องต้น เช่น การ ping หรือ traceroute</li>
+                <li>คำสั่งเข้า: เข้าถึงเมื่อเริ่มเชื่อมต่อพอร์ต Console</li>
+                <li>คำสั่งสลับไปโหมดถัดไป: <code>enable</code></li>
+            </ul>
+        </li>
+        <li><strong>Privileged EXEC Mode</strong> <span class="badge badge-priv">Switch#</span>
+            <ul>
+                <li>โหมดผู้ใช้งานระดับสูง สามารถรันคำสั่งตรวจสอบ (show) ล้างค่า ลบระบบ บันทึกคอนฟิก และดีบั๊กได้</li>
+                <li>คำสั่งเข้า: <code>enable</code></li>
+                <li>คำสั่งสลับไปโหมดถัดไป: <code>configure terminal</code></li>
+            </ul>
+        </li>
+        <li><strong>Global Configuration Mode</strong> <span class="badge badge-config">Switch(config)#</span>
+            <ul>
+                <li>โหมดตั้งค่าหลักของอุปกรณ์ ใช้แก้ชื่อ รหัสผ่าน สร้างบัญชี และสลับไปยังโหมดย่อย ๆ</li>
+                <li>คำสั่งเข้า: <code>configure terminal</code></li>
+            </ul>
+        </li>
+        <li><strong>Interface Configuration Mode</strong> <span class="badge badge-config">Switch(config-if)#</span>
+            <ul>
+                <li>โหมดตั้งค่ารายพอร์ตหรือพอร์ตเสมือน (VLAN Interface)</li>
+                <li>คำสั่งเข้า: <code>interface gigabitethernet 1/0/1</code> (หรือรุ่นอื่น ๆ เช่น <code>interface fastethernet 0/1</code>)</li>
+            </ul>
+        </li>
+    </ul>
+
+    <hr>
+
+    <h2>2. คำสั่งตรวจสอบระบบพื้นฐาน (Show Commands)</h2>
+    <p>คำสั่งเหล่านี้ต้องรันในโหมด <strong>Privileged EXEC</strong> <span class="badge badge-priv">Switch#</span> เท่านั้น:</p>
+    <ul>
+        <li><code>show running-config</code> - ดูคอนฟิกที่รันอยู่ใน RAM</li>
+        <li><code>show startup-config</code> - ดูคอนฟิกที่บันทึกไว้ใน NVRAM (ค่าที่จะโหลดตอนบูตเครื่อง)</li>
+        <li><code>show ip interface brief</code> - ตรวจดูสถานะ Up/Down และ IP Address ของพอร์ตทั้งหมดแบบสรุป</li>
+        <li><code>show interface status</code> - ตรวจดูสถานะการเชื่อมต่อ ความเร็ว (Speed) และโหมดดูเพล็กซ์ (Duplex) ของพอร์ต</li>
+        <li><code>show vlan brief</code> - แสดงรายการ VLAN และพอร์ตที่สังกัดอยู่</li>
+        <li><code>show mac address-table</code> - ตรวจสอบตารางการจำค่า MAC Address ของสวิตช์</li>
+        <li><code>show version</code> - แสดงข้อมูลฮาร์ดแวร์ เวอร์ชันซอฟต์แวร์ IOS และค่าคอนฟิกูเรชันรีจิสเตอร์</li>
+    </ul>
+
+    <hr>
+
+    <h2>3. คำสั่งตั้งค่าเบื้องต้นจากโรงงาน (Basic Setup Workflow)</h2>
+    <pre><code>Switch# configure terminal
+Switch(config)# hostname MySwitch
+MySwitch(config)# enable secret MySecurePassword123
+MySwitch(config)# service password-encryption
+MySwitch(config)# banner motd # Unauthorized Access Prohibited! #</code></pre>
+
+    <h3>การตั้งค่า IP Address และ Default Gateway สำหรับเข้าจัดการ (SVI)</h3>
+    <pre><code>MySwitch(config)# interface vlan 1
+MySwitch(config-if)# ip address 192.168.1.10 255.255.255.0
+MySwitch(config-if)# no shutdown
+MySwitch(config-if)# exit
+MySwitch(config)# ip default-gateway 192.168.1.254</code></pre>
+
+    <h3>การเปิดใช้งาน SSH (Secure Remote Control)</h3>
+    <pre><code>MySwitch(config)# ip domain-name localnet.com
+MySwitch(config)# crypto key generate rsa (เลือกคีย์ขนาด 2048 บิต)
+MySwitch(config)# username admin privilege 15 secret MyAdminPassword
+MySwitch(config)# line vty 0 15
+MySwitch(config-line)# transport input ssh
+MySwitch(config-line)# login local
+MySwitch(config-line)# exit</code></pre>
+
+    <h3>การล้างการตั้งค่าโรงงาน (Factory Reset)</h3>
+    <pre><code>MySwitch# write erase
+MySwitch# delete flash:vlan.dat (ตอบตกลงโดยกด Enter ยืนยัน)
+MySwitch# reload</code></pre>
+
+    <hr>
+
+    <h2>4. สรุปขั้นตอน Password Recovery ด่วน</h2>
+    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 280px; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; background-color: #fff;">
+            <h3>แบบเดิม (ปุ่ม Mode)</h3>
+            <ol>
+                <li>ถอดสายไฟสวิตช์</li>
+                <li>กดปุ่ม <strong>Mode</strong> ค้างไว้แล้วเสียบสายไฟ</li>
+                <li>ปล่อยปุ่ม Mode เมื่อ System LED ติดเขียวค้าง</li>
+                <li>รันคำสั่ง <code>flash_init</code></li>
+                <li>รันคำสั่ง <code>rename flash:config.text flash:config.text.old</code></li>
+                <li>พิมพ์ <code>boot</code></li>
+                <li>พิมพ์ <code>enable</code></li>
+                <li>รัน <code>rename flash:config.text.old flash:config.text</code></li>
+                <li>รัน <code>copy flash:config.text system:running-config</code></li>
+                <li>เปลี่ยนรหัสผ่านใน <code>configure terminal</code></li>
+                <li>พิมพ์ <code>copy running-config startup-config</code> เพื่อบันทึก</li>
+            </ol>
+        </div>
+        
+        <div style="flex: 1; min-width: 280px; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; background-color: #fff;">
+            <h3>แบบใหม่ (ROMMON Catalyst 9000)</h3>
+            <ol>
+                <li>ต่อสาย Console เข้าสวิตช์</li>
+                <li>บูตสวิตช์และกด <strong>Ctrl+C</strong> หรือกดปุ่ม Mode ค้าง เพื่อเข้าสู่หน้าจอ <code>switch:</code></li>
+                <li>พิมพ์ <code>SWITCH_IGNORE_STARTUP_CFG=1</code></li>
+                <li>พิมพ์ <code>boot</code></li>
+                <li>พิมพ์ <code>enable</code> เมื่อบูตเสร็จ</li>
+                <li>รัน <code>copy startup-config running-config</code></li>
+                <li>เข้าโหมดคอนฟิกและตั้งรหัสผ่านใหม่</li>
+                <li>พิมพ์ <code>no system ignore startupconfig switch all</code></li>
+                <li>บันทึกด้วย <code>copy running-config startup-config</code></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="footer" style="margin-top: 3rem;">
+        เอกสารสรุปโดย Antigravity AI - ปรับปรุงล่าสุด กรกฎาคม 2026
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "cisco-ios-patterns": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "skillPath": "skills/cisco-ios-patterns/SKILL.md",
+      "computedHash": "dc82eb72845f1a613e18ec17a0f1750b92680c95cc2f75bd37f1c13b3f9017a0"
+    },
+    "hybrid-cloud-networking": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/cloud-infrastructure/skills/hybrid-cloud-networking/SKILL.md",
+      "computedHash": "924c2327b9f369f186f56f11f291a9f5196d8a53ed1d73a5b65acf5a6248257f"
+    },
+    "network": {
+      "source": "markdown-viewer/skills",
+      "sourceType": "github",
+      "skillPath": "network/SKILL.md",
+      "computedHash": "19a795034c83c522abf57c5a1b41bae4f563cfecc6778b0181d50ed3f9d7ab9b"
+    }
+  }
+}

@@ -1,0 +1,170 @@
+/* Shared Stylesheet for Cisco Lessons and References */
+
+:root {
+    --bg-color: #fcfcfc;
+    --text-color: #2c3e50;
+    --primary-color: #0d6efd;
+    --secondary-color: #495057;
+    --accent-color: #e63946;
+    --code-bg: #f1f3f5;
+    --border-color: #dee2e6;
+    --card-bg: #ffffff;
+    --font-sans: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+h1, h2, h3, h4 {
+    color: #1a252f;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+}
+
+h1 {
+    font-size: 2.2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+h2 {
+    font-size: 1.6rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+}
+
+p {
+    margin-bottom: 1.2rem;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+/* Code Blocks */
+pre, code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+code {
+    background-color: var(--code-bg);
+    color: var(--accent-color);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+}
+
+pre {
+    background-color: #1e1e1e;
+    color: #f8f9fa;
+    padding: 1.25rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    border: 1px solid #333;
+    margin: 1.5rem 0;
+}
+
+pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* Callouts / Alerts */
+.callout {
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    border-left: 5px solid;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+}
+
+.callout-info {
+    border-left-color: #0dcaf0;
+    background-color: #f0fbfc;
+}
+
+.callout-warning {
+    border-left-color: #ffc107;
+    background-color: #fffdf5;
+}
+
+.callout-danger {
+    border-left-color: #dc3545;
+    background-color: #fff5f6;
+}
+
+.callout-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* Nav & Footer */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.footer {
+    margin-top: 4rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}

@@ -1,0 +1,103 @@
+/* Style for Quiz Widget */
+
+.quiz-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-question {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #1a252f;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-option {
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.quiz-option:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.quiz-option.correct {
+    background-color: #d1e7dd;
+    border-color: #a3cfbb;
+    color: #0f5132;
+    font-weight: 500;
+}
+
+.quiz-option.incorrect {
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    color: #842029;
+}
+
+.quiz-feedback {
+    display: none;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.quiz-feedback.show {
+    display: block;
+}
+
+.quiz-feedback.correct-feedback {
+    background-color: #f0fdf4;
+    border-left: 4px solid #198754;
+    color: #198754;
+}
+
+.quiz-feedback.incorrect-feedback {
+    background-color: #fff5f5;
+    border-left: 4px solid #dc3545;
+    color: #dc3545;
+}
+
+.quiz-next-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    margin-top: 0.5rem;
+}
+
+.quiz-next-btn:hover {
+    background-color: #0b5ed7;
+}
+
+.quiz-progress {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
