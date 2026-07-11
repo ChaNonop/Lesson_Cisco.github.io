@@ -1,4 +1,4 @@
-.agents/
+.agents/skills/
 
 # Ignore all markdown files by default
 *.md
