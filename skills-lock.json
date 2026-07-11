@@ -7,6 +7,12 @@
       "skillPath": "skills/cisco-ios-patterns/SKILL.md",
       "computedHash": "dc82eb72845f1a613e18ec17a0f1750b92680c95cc2f75bd37f1c13b3f9017a0"
     },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "93f53fd1c0352d3d7ec17b8f73d7351bf76f4821e55d123c9d2abc2c53ba48e4"
+    },
     "hybrid-cloud-networking": {
       "source": "wshobson/agents",
       "sourceType": "github",

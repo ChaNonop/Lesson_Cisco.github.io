@@ -1,155 +1,363 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เอกสารสรุปคำสั่งและโหมดการตั้งค่า Cisco Switch (Quick Reference)</title>
-    <link rel="stylesheet" href="../assets/style.css">
-    <style>
-        /* สไตล์พิเศษสำหรับเอกสารอ้างอิง */
-        .badge {
-            display: inline-block;
-            padding: 0.25em 0.6em;
-            font-size: 0.75em;
-            font-weight: 700;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 0.25rem;
-            color: #fff;
-            background-color: var(--secondary-color);
+    <title>เอกสารสรุปคำสั่งปฎิบัติการ Cisco Switch Quick Reference</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'Sarabun', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        deepnavy: {
+                            50: '#F1F5F9',
+                            100: '#E2E8F0',
+                            800: '#1E293B',
+                            900: '#0F172A',
+                            950: '#0B0F19',
+                        },
+                        brand: {
+                            50: '#EEF2FF',
+                            100: '#E0E7FF',
+                            500: '#6366F1',
+                            600: '#4F46E5',
+                        }
+                    }
+                }
+            }
         }
-        .badge-priv { background-color: #e63946; }
-        .badge-config { background-color: #0d6efd; }
-        .badge-user { background-color: #6c757d; }
-        
-        @media print {
-            body { padding: 0; max-width: 100%; font-size: 12pt; }
-            .navigation, .footer { display: none; }
-            pre { border: 1px solid #ccc; page-break-inside: avoid; }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 dark:bg-deepnavy-950 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200 overflow-hidden h-screen flex flex-col">
 
-    <h1>เอกสารสรุปคำสั่ง Cisco Switch Quick Reference</h1>
-    <p>สรุปคำสั่ง คีย์ลัด และขั้นตอนด่วนสำหรับการตั้งค่าและกู้คืนรหัสผ่านสวิตช์ Cisco (สามารถพิมพ์หน้านี้เป็น PDF หรือกระดาษเพื่อใช้งานหน้างานได้)</p>
-
-    <h2>1. ระดับสิทธิ์และโหมดการตั้งค่า (CLI Prompts)</h2>
-    <ul>
-        <li><strong>User EXEC Mode</strong> <span class="badge badge-user">Switch&gt;</span>
-            <ul>
-                <li>ใช้สำหรับดูสถานะทั่วไปเบื้องต้น เช่น การ ping หรือ traceroute</li>
-                <li>คำสั่งเข้า: เข้าถึงเมื่อเริ่มเชื่อมต่อพอร์ต Console</li>
-                <li>คำสั่งสลับไปโหมดถัดไป: <code>enable</code></li>
-            </ul>
-        </li>
-        <li><strong>Privileged EXEC Mode</strong> <span class="badge badge-priv">Switch#</span>
-            <ul>
-                <li>โหมดผู้ใช้งานระดับสูง สามารถรันคำสั่งตรวจสอบ (show) ล้างค่า ลบระบบ บันทึกคอนฟิก และดีบั๊กได้</li>
-                <li>คำสั่งเข้า: <code>enable</code></li>
-                <li>คำสั่งสลับไปโหมดถัดไป: <code>configure terminal</code></li>
-            </ul>
-        </li>
-        <li><strong>Global Configuration Mode</strong> <span class="badge badge-config">Switch(config)#</span>
-            <ul>
-                <li>โหมดตั้งค่าหลักของอุปกรณ์ ใช้แก้ชื่อ รหัสผ่าน สร้างบัญชี และสลับไปยังโหมดย่อย ๆ</li>
-                <li>คำสั่งเข้า: <code>configure terminal</code></li>
-            </ul>
-        </li>
-        <li><strong>Interface Configuration Mode</strong> <span class="badge badge-config">Switch(config-if)#</span>
-            <ul>
-                <li>โหมดตั้งค่ารายพอร์ตหรือพอร์ตเสมือน (VLAN Interface)</li>
-                <li>คำสั่งเข้า: <code>interface gigabitethernet 1/0/1</code> (หรือรุ่นอื่น ๆ เช่น <code>interface fastethernet 0/1</code>)</li>
-            </ul>
-        </li>
-    </ul>
-
-    <hr>
-
-    <h2>2. คำสั่งตรวจสอบระบบพื้นฐาน (Show Commands)</h2>
-    <p>คำสั่งเหล่านี้ต้องรันในโหมด <strong>Privileged EXEC</strong> <span class="badge badge-priv">Switch#</span> เท่านั้น:</p>
-    <ul>
-        <li><code>show running-config</code> - ดูคอนฟิกที่รันอยู่ใน RAM</li>
-        <li><code>show startup-config</code> - ดูคอนฟิกที่บันทึกไว้ใน NVRAM (ค่าที่จะโหลดตอนบูตเครื่อง)</li>
-        <li><code>show ip interface brief</code> - ตรวจดูสถานะ Up/Down และ IP Address ของพอร์ตทั้งหมดแบบสรุป</li>
-        <li><code>show interface status</code> - ตรวจดูสถานะการเชื่อมต่อ ความเร็ว (Speed) และโหมดดูเพล็กซ์ (Duplex) ของพอร์ต</li>
-        <li><code>show vlan brief</code> - แสดงรายการ VLAN และพอร์ตที่สังกัดอยู่</li>
-        <li><code>show mac address-table</code> - ตรวจสอบตารางการจำค่า MAC Address ของสวิตช์</li>
-        <li><code>show version</code> - แสดงข้อมูลฮาร์ดแวร์ เวอร์ชันซอฟต์แวร์ IOS และค่าคอนฟิกูเรชันรีจิสเตอร์</li>
-    </ul>
-
-    <hr>
-
-    <h2>3. คำสั่งตั้งค่าเบื้องต้นจากโรงงาน (Basic Setup Workflow)</h2>
-    <pre><code>Switch# configure terminal
-Switch(config)# hostname MySwitch
-MySwitch(config)# enable secret MySecurePassword123
-MySwitch(config)# service password-encryption
-MySwitch(config)# banner motd # Unauthorized Access Prohibited! #</code></pre>
-
-    <h3>การตั้งค่า IP Address และ Default Gateway สำหรับเข้าจัดการ (SVI)</h3>
-    <pre><code>MySwitch(config)# interface vlan 1
-MySwitch(config-if)# ip address 192.168.1.10 255.255.255.0
-MySwitch(config-if)# no shutdown
-MySwitch(config-if)# exit
-MySwitch(config)# ip default-gateway 192.168.1.254</code></pre>
-
-    <h3>การเปิดใช้งาน SSH (Secure Remote Control)</h3>
-    <pre><code>MySwitch(config)# ip domain-name localnet.com
-MySwitch(config)# crypto key generate rsa (เลือกคีย์ขนาด 2048 บิต)
-MySwitch(config)# username admin privilege 15 secret MyAdminPassword
-MySwitch(config)# line vty 0 15
-MySwitch(config-line)# transport input ssh
-MySwitch(config-line)# login local
-MySwitch(config-line)# exit</code></pre>
-
-    <h3>การล้างการตั้งค่าโรงงาน (Factory Reset)</h3>
-    <pre><code>MySwitch# write erase
-MySwitch# delete flash:vlan.dat (ตอบตกลงโดยกด Enter ยืนยัน)
-MySwitch# reload</code></pre>
-
-    <hr>
-
-    <h2>4. สรุปขั้นตอน Password Recovery ด่วน</h2>
-    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 280px; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; background-color: #fff;">
-            <h3>แบบเดิม (ปุ่ม Mode)</h3>
-            <ol>
-                <li>ถอดสายไฟสวิตช์</li>
-                <li>กดปุ่ม <strong>Mode</strong> ค้างไว้แล้วเสียบสายไฟ</li>
-                <li>ปล่อยปุ่ม Mode เมื่อ System LED ติดเขียวค้าง</li>
-                <li>รันคำสั่ง <code>flash_init</code></li>
-                <li>รันคำสั่ง <code>rename flash:config.text flash:config.text.old</code></li>
-                <li>พิมพ์ <code>boot</code></li>
-                <li>พิมพ์ <code>enable</code></li>
-                <li>รัน <code>rename flash:config.text.old flash:config.text</code></li>
-                <li>รัน <code>copy flash:config.text system:running-config</code></li>
-                <li>เปลี่ยนรหัสผ่านใน <code>configure terminal</code></li>
-                <li>พิมพ์ <code>copy running-config startup-config</code> เพื่อบันทึก</li>
-            </ol>
+    <!-- Header -->
+    <header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-deepnavy-950/80 backdrop-blur-md flex items-center justify-between px-6 z-30 shrink-0">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-base shadow-md">
+                Ref
+            </div>
+            <div>
+                <span class="font-bold text-base bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">Cisco CLI Reference Sheets</span>
+                <p class="text-[10px] text-slate-500 -mt-0.5">คู่มือสรุปคำสั่งเน้นการปฏิบัติงานหน้างาน</p>
+            </div>
         </div>
         
-        <div style="flex: 1; min-width: 280px; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; background-color: #fff;">
-            <h3>แบบใหม่ (ROMMON Catalyst 9000)</h3>
-            <ol>
-                <li>ต่อสาย Console เข้าสวิตช์</li>
-                <li>บูตสวิตช์และกด <strong>Ctrl+C</strong> หรือกดปุ่ม Mode ค้าง เพื่อเข้าสู่หน้าจอ <code>switch:</code></li>
-                <li>พิมพ์ <code>SWITCH_IGNORE_STARTUP_CFG=1</code></li>
-                <li>พิมพ์ <code>boot</code></li>
-                <li>พิมพ์ <code>enable</code> เมื่อบูตเสร็จ</li>
-                <li>รัน <code>copy startup-config running-config</code></li>
-                <li>เข้าโหมดคอนฟิกและตั้งรหัสผ่านใหม่</li>
-                <li>พิมพ์ <code>no system ignore startupconfig switch all</code></li>
-                <li>บันทึกด้วย <code>copy running-config startup-config</code></li>
-            </ol>
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                กลับหน้าหลัก Portal
+            </a>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-150 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-800" aria-label="Toggle theme">
+                <span id="theme-icon"></span>
+            </button>
         </div>
+    </header>
+
+    <!-- Main Outer Box -->
+    <div class="flex flex-1 overflow-hidden relative">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-80 bg-white dark:bg-deepnavy-950 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0">
+            <nav class="flex-1 overflow-y-auto p-4 space-y-4">
+                <h3 class="text-xs font-bold text-slate-700 dark:text-slate-500 uppercase tracking-wider mb-2 px-3">หมวดหมู่ปฏิบัติการ</h3>
+                <div class="space-y-1">
+                    <a href="#section-basic" class="block p-2.5 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 font-medium transition-all">
+                        1. ตั้งค่าความปลอดภัยขั้นต้น
+                    </a>
+                    <a href="#section-remote" class="block p-2.5 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 font-medium transition-all">
+                        2. จัดการ Remote IP & SSH v2
+                    </a>
+                    <a href="#section-vlan" class="block p-2.5 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 font-medium transition-all">
+                        3. ตั้งค่า VLAN & Trunk
+                    </a>
+                    <a href="#section-reset" class="block p-2.5 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 font-medium transition-all">
+                        4. การบันทึกและล้างเครื่อง
+                    </a>
+                    <a href="#section-recovery" class="block p-2.5 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 font-medium transition-all border-l-2 border-rose-500 bg-rose-50/20 dark:bg-rose-950/10 text-rose-700 dark:text-rose-400">
+                        5. กู้คืนรหัสผ่าน (Password Recovery)
+                    </a>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/40 text-center">
+                <span class="text-[10px] text-slate-500 font-mono">© 2026 Cisco Practice Guide</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50 dark:bg-deepnavy-950" id="ref-scroll-container">
+            <div class="max-w-3xl mx-auto space-y-12 pb-16">
+                
+                <!-- Section 1: Basic Config -->
+                <section id="section-basic" class="space-y-4 pt-4">
+                    <h2 class="text-xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
+                        <span>🛡️</span> 1. การตั้งค่าความปลอดภัยและระบบขั้นต้น
+                    </h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 -mt-2">ใช้กำหนดพารามิเตอร์พื้นฐานและรหัสผ่านเมื่อนำอุปกรณ์ขึ้นติดตั้ง</p>
+                    <div class="bg-white dark:bg-slate-900/40 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">เปลี่ยนชื่อเครื่องและเปิดใช้งานการเข้ารหัสลับรหัสผ่าน:</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>Switch# configure terminal
+Switch(config)# hostname SW-Primary
+SW-Primary(config)# enable secret P@ssword1234
+SW-Primary(config)# service password-encryption</code></pre>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">กำหนดรหัสผ่านให้กับพอร์ต Console (เมื่อต่อสายตรง):</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary(config)# line console 0
+SW-Primary(config-line)# password ConsolePass1
+SW-Primary(config-line)# login
+SW-Primary(config-line)# exit</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Remote IP & SSH -->
+                <section id="section-remote" class="space-y-4 border-t border-slate-200 dark:border-slate-800/80 pt-6">
+                    <h2 class="text-xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
+                        <span>🌐</span> 2. การจัดการ Remote IP & เปิดใช้งาน SSH v2
+                    </h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 -mt-2">ใช้เพื่อควบคุมและจัดการสวิตช์ระยะไกลแทนการต่อสายตรงหน้าเครื่อง</p>
+                    <div class="bg-white dark:bg-slate-900/40 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">ตั้งหมายเลข IP ในพอร์ตเสมือน (SVI) และ Default Gateway:</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary(config)# interface vlan 1
+SW-Primary(config-if)# ip address 192.168.1.10 255.255.255.0
+SW-Primary(config-if)# no shutdown
+SW-Primary(config-if)# exit
+SW-Primary(config)# ip default-gateway 192.168.1.254</code></pre>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">สร้างผู้ใช้โลคอลและเปิดบริการ SSH v2.0 (ปิด Telnet ที่ไม่ปลอดภัย):</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary(config)# ip domain-name companynet.com
+SW-Primary(config)# username admin privilege 15 secret AdminPass99
+SW-Primary(config)# crypto key generate rsa  (เลือก Modulus = 2048)
+SW-Primary(config)# ip ssh version 2
+SW-Primary(config)# line vty 0 15
+SW-Primary(config-line)# transport input ssh
+SW-Primary(config-line)# login local
+SW-Primary(config-line)# exit</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: VLANs & Trunk -->
+                <section id="section-vlan" class="space-y-4 border-t border-slate-200 dark:border-slate-800/80 pt-6">
+                    <h2 class="text-xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
+                        <span>🔌</span> 3. การกำหนดค่า VLAN และการทำ Trunking (802.1Q)
+                    </h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 -mt-2">ใช้เพื่อจัดโครงสร้างแผนกในองค์กรและเชื่อมต่อทราฟฟิกระหว่างอุปกรณ์</p>
+                    <div class="bg-white dark:bg-slate-900/40 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">สร้าง VLAN และเอาพอร์ตแลนเข้าไปสังกัด (Access Mode):</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary(config)# vlan 10
+SW-Primary(config-vlan)# name Sales
+SW-Primary(config-vlan)# exit
+SW-Primary(config)# interface fastethernet 0/5
+SW-Primary(config-if)# switchport mode access
+SW-Primary(config-if)# switchport access vlan 10
+SW-Primary(config-if)# exit</code></pre>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">ตั้งค่าพอร์ตให้รับส่งข้อมูลทุก VLAN เพื่อต่อหาสวิตช์อีกตัว (Trunk Mode):</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary(config)# interface gigabitethernet 1/0/1
+SW-Primary(config-if)# switchport mode trunk
+SW-Primary(config-if)# switchport trunk allowed vlan 10,20
+SW-Primary(config-if)# exit</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Maintenance -->
+                <section id="section-reset" class="space-y-4 border-t border-slate-200 dark:border-slate-800/80 pt-6">
+                    <h2 class="text-xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
+                        <span>💾</span> 4. การบันทึก สำรองข้อมูล และการล้างเครื่องค่าโรงงาน
+                    </h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 -mt-2">ใช้บันทึกการทำงาน ตรวจสอบสถานะการเชื่อมต่อ และการลบระบบ</p>
+                    <div class="bg-white dark:bg-slate-900/40 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">คำสั่งบันทึกการทำงานและล้างคอนฟิก (Factory Reset):</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary# copy running-config startup-config  (บันทึกข้อมูล)
+SW-Primary# write erase                        (ล้างข้อมูลตั้งค่า)
+SW-Primary# delete flash:vlan.dat              (ลบฐานข้อมูล VLAN)
+SW-Primary# reload                             (เริ่มต้นอุปกรณ์ใหม่)</code></pre>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase">คำสั่งใช้ตรวจสอบสถานะการทำงานยอดนิยม:</span>
+                            <pre class="bg-black text-slate-200 p-4 rounded-lg text-xs font-mono mt-1.5 overflow-x-auto relative group"><code>SW-Primary# show ip interface brief    (ตรวจดูพอร์ตและ IP แอดเดรส)
+SW-Primary# show interface status      (ตรวจดูสถานะการอัพดาวน์และความเร็วพอร์ต)
+SW-Primary# show vlan brief            (ตรวจเช็กคู่สาย VLAN ที่กำหนดค่า)
+SW-Primary# show mac address-table     (ดูตารางเชื่อมโยงพอร์ตและ MAC ของลูกข่าย)</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 5: Password Recovery -->
+                <section id="section-recovery" class="space-y-4 border-t border-slate-200 dark:border-slate-800/80 pt-6">
+                    <h2 class="text-xl font-bold text-rose-600 dark:text-rose-400 flex items-center gap-2">
+                        <span>🔑</span> 5. ขั้นตอนกู้คืนรหัสผ่านสวิตช์ (Password Recovery)
+                    </h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 -mt-2">สำหรับดำเนินการเมื่อลืมรหัสผ่านผู้ควบคุมระบบ</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Legacy -->
+                        <div class="bg-white dark:bg-slate-900/40 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+                            <h4 class="font-bold text-indigo-700 dark:text-indigo-400 text-sm">ซีรีส์เดิม (Catalyst 2960/3560/3750)</h4>
+                            <ol class="list-decimal list-inside text-xs text-slate-700 dark:text-slate-300 space-y-2 mt-2">
+                                <li>ถอดสายไฟปิดเครื่อง</li>
+                                <li>กดปุ่ม **Mode** ค้างไว้แล้วเสียบปลั๊กไฟ</li>
+                                <li>ปล่อยปุ่ม Mode เมื่อไฟ SYST สีเขียวค้าง</li>
+                                <li>ป้อนคำสั่ง: <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">flash_init</code></li>
+                                <li>เปลี่ยนชื่อไฟล์เพื่อซ่อนค่าคอนฟิก:
+                                    <pre class="bg-black text-slate-200 p-2.5 rounded text-[10px] font-mono mt-1"><code>rename flash:config.text flash:config.text.old</code></pre>
+                                </li>
+                                <li>ป้อนคำสั่ง: <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">boot</code></li>
+                                <li>ระบบบูตเสร็จป้อน <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">enable</code></li>
+                                <li>ดึงไฟล์คืน:
+                                    <pre class="bg-black text-slate-200 p-2.5 rounded text-[10px] font-mono mt-1"><code>rename flash:config.text.old flash:config.text
+copy flash:config.text system:running-config</code></pre>
+                                </li>
+                                <li>เข้า Global Config และตั้งรหัสผ่านใหม่:
+                                    <pre class="bg-black text-slate-200 p-2.5 rounded text-[10px] font-mono mt-1"><code>enable secret [รหัสผ่านใหม่]</code></pre>
+                                </li>
+                                <li>เซฟทับด้วย <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">write memory</code></li>
+                            </ol>
+                        </div>
+
+                        <!-- Modern -->
+                        <div class="bg-white dark:bg-slate-900/40 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
+                            <h4 class="font-bold text-indigo-700 dark:text-indigo-400 text-sm">ซีรีส์ใหม่ (Catalyst 9000 - IOS-XE)</h4>
+                            <ol class="list-decimal list-inside text-xs text-slate-700 dark:text-slate-300 space-y-2 mt-2">
+                                <li>ต่อสาย Console ปิดและเปิดสวิตช์ใหม่</li>
+                                <li>กดปุ่ม **Ctrl+C** ค้างซ้ำ ๆ จนเข้าสู่หน้าจอ <code class="font-mono">switch:</code></li>
+                                <li>สั่งให้ระบบข้ามคอนฟิกเดิม:
+                                    <pre class="bg-black text-slate-200 p-2.5 rounded text-[10px] font-mono mt-1"><code>SWITCH_IGNORE_STARTUP_CFG=1</code></pre>
+                                </li>
+                                <li>ป้อนคำสั่ง: <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">boot</code></li>
+                                <li>บูตเสร็จเข้าโหมดแอดมิน: <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">enable</code></li>
+                                <li>ดึงค่าคอนฟิกเก่าคืน:
+                                    <pre class="bg-black text-slate-200 p-2.5 rounded text-[10px] font-mono mt-1"><code>copy startup-config running-config</code></pre>
+                                </li>
+                                <li>เข้าไปกำหนดชื่อผู้ใช้และรหัสผ่านใหม่ในโหมด config</li>
+                                <li>**(สำคัญ)** สั่งยกเลิกตัวแปร Ignore บูต:
+                                    <pre class="bg-black text-slate-200 p-2.5 rounded text-[10px] font-mono mt-1"><code>no system ignore startupconfig switch all</code></pre>
+                                </li>
+                                <li>บันทึกและตรวจสอบ: <code class="font-mono bg-slate-100 dark:bg-black/60 px-1 rounded text-red-500">write memory</code></li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
     </div>
 
-    <div class="footer" style="margin-top: 3rem;">
-        เอกสารสรุปโดย Antigravity AI - ปรับปรุงล่าสุด กรกฎาคม 2026
-    </div>
+    <!-- Scripts -->
+    <script>
+        // 1. Dark/Light Theme Control
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
 
+        function applyTheme(theme) {
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+                themeIcon.innerHTML = `
+                    <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707-.707m12.728 0l-.707.707M6.343 6.364l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                    </svg>
+                `;
+            } else {
+                document.documentElement.classList.remove("dark");
+                themeIcon.innerHTML = `
+                    <svg class="w-5 h-5 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                `;
+            }
+            localStorage.setItem("theme", theme);
+        }
+
+        // Initialize Theme
+        const savedTheme = localStorage.getItem("theme");
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+            applyTheme("dark");
+        } else {
+            applyTheme("light");
+        }
+
+        themeToggleBtn.addEventListener("click", () => {
+            const isDark = document.documentElement.classList.contains("dark");
+            applyTheme(isDark ? "light" : "dark");
+        });
+
+        // 2. Setup Copy buttons on Code Blocks
+        document.querySelectorAll("pre").forEach(pre => {
+            pre.classList.add("relative", "group");
+            const code = pre.querySelector("code");
+            if (!code) return;
+
+            const btn = document.createElement("button");
+            btn.className = "absolute right-2 top-2 px-2 py-1 text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded border border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200";
+            btn.innerText = "Copy";
+            
+            btn.addEventListener("click", () => {
+                const text = code.innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    btn.innerText = "Copied! ✓";
+                    btn.classList.add("text-emerald-400", "border-emerald-600");
+                    setTimeout(() => {
+                        btn.innerText = "Copy";
+                        btn.classList.remove("text-emerald-400", "border-emerald-600");
+                    }, 2000);
+                });
+            });
+            pre.appendChild(btn);
+        });
+
+        // 3. Smooth Sidebar Anchor Links
+        document.querySelectorAll('aside a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

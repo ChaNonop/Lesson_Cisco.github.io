@@ -1,262 +1,461 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cisco Switch & Networking Course - แหล่งเรียนรู้ออนไลน์</title>
-    
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="hฝ/ttps://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Custom CSS Overrides -->
-    <link rel="stylesheet" href="assets/quiz.css">
-    
+    <link rel="stylesheet" href="assets/quiz.css" />
+
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'Sarabun', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    colors: {
-                        deepnavy: {
-                            50: '#F1F5F9',
-                            100: '#E2E8F0',
-                            200: '#CBD5E1',
-                            800: '#1E293B',
-                            900: '#0F172A',
-                            950: '#0B0F19', // Custom dark theme background
-                        },
-                        brand: {
-                            50: '#EEF2FF',
-                            100: '#E0E7FF',
-                            500: '#6366F1', // Indigo
-                            600: '#4F46E5',
-                            700: '#4338CA',
-                        }
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Outfit", "Sarabun", "sans-serif"],
+              mono: ["Fira Code", "monospace"],
+            },
+            colors: {
+              deepnavy: {
+                50: "#F1F5F9",
+                100: "#E2E8F0",
+                200: "#CBD5E1",
+                800: "#1E293B",
+                900: "#0F172A",
+                950: "#0B0F19", // Custom dark theme background
+              },
+              brand: {
+                50: "#EEF2FF",
+                100: "#E0E7FF",
+                500: "#6366F1", // Indigo
+                600: "#4F46E5",
+                700: "#4338CA",
+              },
+            },
+          },
+        },
+      };
     </script>
-    
+
     <style>
-        /* Custom scrollbar and glass effect overrides */
-        .glass-panel {
-            background-color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .dark .glass-panel {
-            background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #334155;
-        }
+      /* Custom scrollbar and glass effect overrides */
+      .glass-panel {
+        background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .dark .glass-panel {
+        background-color: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
+
+      /* Soft contrast styling for code blocks in Light/Dark modes */
+      pre {
+        background-color: #f8fafc !important; /* light slate-50 */
+        color: #0f172a !important; /* dark slate-900 */
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-size: 0.875rem;
+        overflow-x: auto;
+      }
+      .dark pre {
+        background-color: #0f172a !important; /* dark slate-900 */
+        color: #f1f5f9 !important; /* light slate-100 */
+        border: 1px solid #1e293b !important;
+      }
+      code {
+        font-family: "Fira Code", monospace;
+        background-color: #f1f5f9 !important;
+        color: #4f46e5 !important;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+      }
+      .dark code {
+        background-color: #1e293b !important;
+        color: #818cf8 !important;
+      }
+      pre code {
+        background-color: transparent !important;
+        color: inherit !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+      }
     </style>
-</head>
-<body class="bg-slate-50 dark:bg-deepnavy-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200 overflow-hidden h-screen flex flex-col">
-
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-deepnavy-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200 overflow-hidden h-screen flex flex-col"
+  >
     <!-- Header / Navbar -->
-    <header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-deepnavy-950/80 backdrop-blur-md flex items-center justify-between px-6 z-30 shrink-0">
-        <div class="flex items-center gap-3">
-            <button id="btn-open-sidebar" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-base shadow-md">
-                    C
-                </div>
-                <span class="font-bold text-lg bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-500 bg-clip-text text-transparent">Cisco Learn Portal</span>
-            </div>
+    <header
+      class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-deepnavy-950/80 backdrop-blur-md flex items-center justify-between px-6 z-30 shrink-0"
+    >
+      <div class="flex items-center gap-3">
+        <button
+          id="btn-open-sidebar"
+          class="lg:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+          aria-label="เปิดเมนูหลักสูตร"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+        <div class="flex items-center gap-2">
+          <div
+            class="w-8 h-8 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-base shadow-md"
+          >
+            C
+          </div>
+          <span
+            class="font-bold text-lg bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-500 bg-clip-text text-transparent"
+            >Cisco Learn Portal</span
+          >
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Interactive Search Bar -->
+        <div class="relative hidden sm:block">
+          <div
+            class="flex items-center gap-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 transition-all"
+          >
+            <svg
+              class="w-4 h-4 text-slate-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="ค้นหาบทเรียนและหัวข้อย่อย..."
+              aria-label="ค้นหาบทเรียนและหัวข้อย่อย"
+              class="bg-transparent border-none outline-none text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 w-44 focus:w-60 transition-all duration-300"
+            />
+          </div>
+          <!-- Search Results Dropdown -->
+          <div
+            id="search-results"
+            class="hidden absolute top-11 right-0 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl z-50 p-2 max-h-64 overflow-y-auto"
+          ></div>
         </div>
 
-        <div class="flex items-center gap-4">
-            <!-- Search bar placeholder -->
-            <div class="hidden sm:flex items-center gap-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-3 py-1.5 text-xs text-slate-400">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-                <span>ค้นหาหัวข้อการเรียนรู้...</span>
-            </div>
-
-            <!-- Light/Dark Mode Switch -->
-            <button id="theme-toggle" class="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-850" aria-label="Toggle theme">
-                <span id="theme-icon"></span>
-            </button>
-        </div>
+        <!-- Light/Dark Mode Switch -->
+        <button
+          id="theme-toggle"
+          class="p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-800"
+          aria-label="สลับธีมมืดและสว่าง"
+        >
+          <span id="theme-icon"></span>
+        </button>
+      </div>
     </header>
 
     <!-- Main Workspace Container -->
     <div class="flex flex-1 overflow-hidden relative">
-        
-        <!-- Sidebar Navigation Drawer Overlay -->
-        <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"></div>
+      <!-- Sidebar Navigation Drawer Overlay -->
+      <div
+        id="sidebar-overlay"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+      ></div>
 
-        <!-- Sidebar Navigation -->
-        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-72 bg-white dark:bg-deepnavy-950 border-r border-slate-200 dark:border-slate-800 flex flex-col z-50 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 h-full shrink-0">
-            <!-- Close button for mobile -->
-            <div class="flex items-center justify-between p-4 border-b border-slate-250 dark:border-slate-800 lg:hidden">
-                <span class="font-bold text-sm text-slate-400 uppercase tracking-wider">เมนูหลักสูตร</span>
-                <button id="btn-close-sidebar" class="p-1.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed lg:static inset-y-0 left-0 w-80 bg-white dark:bg-deepnavy-950 border-r border-slate-200 dark:border-slate-800 flex flex-col z-50 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 h-full shrink-0"
+      >
+        <!-- Close button for mobile -->
+        <div
+          class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800 lg:hidden"
+        >
+          <span
+            class="font-bold text-sm text-slate-700 dark:text-slate-400 uppercase tracking-wider"
+            >เมนูหลักสูตร</span
+          >
+          <button
+            id="btn-close-sidebar"
+            class="p-1.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+            aria-label="ปิดเมนูหลักสูตร"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Scrollable menu links -->
+        <nav class="flex-1 overflow-y-auto p-4 space-y-6">
+          <!-- Group 1: Theory -->
+          <div>
+            <h3
+              class="text-[13px] font-extrabold text-slate-800 dark:text-slate-400 uppercase tracking-wide mb-3 px-1.5"
+            >
+              กลุ่มที่ 1: ทฤษฎีเครือข่ายพื้นฐาน
+            </h3>
+            <div class="space-y-1">
+              <a
+                href="#"
+                data-lesson-target="lesson-1"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate"
+                  >บทที่ 1: สถาปัตยกรรม Layer & Layer 1-2</span
+                >
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-2"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate"
+                  >บทที่ 2: เจาะลึก Layer 3-4 IP/TCP/UDP</span
+                >
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-3"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate">บทที่ 3: ระดับบนของ OSI L5-L7</span>
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-4"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate"
+                  >บทที่ 4: การเดินทางข้อมูล Encapsulation</span
+                >
+              </a>
             </div>
+          </div>
 
-            <!-- Scrollable menu links -->
-            <nav class="flex-1 overflow-y-auto p-4 space-y-6">
-                <!-- Group 1: Theory -->
-                <div>
-                    <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3 px-3">กลุ่มที่ 1: ทฤษฎีเครือข่ายพื้นฐาน</h3>
-                    <div class="space-y-1">
-                        <a href="#" data-lesson-target="lesson-1" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 1: สถาปัตยกรรม Layer & L1-L2</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">พร้อมเรียน</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-2" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 2: เจาะลึก L3-L4 IP/TCP/UDP</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">พร้อมเรียน</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-3" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 3: ระดับบนของ OSI L5-L7</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">พร้อมเรียน</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-4" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 4: การเดินทางข้อมูล Encapsulation</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">พร้อมเรียน</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Group 2: Config -->
-                <div>
-                    <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3 px-3">กลุ่มที่ 2: การตั้งค่าอุปกรณ์ Cisco</h3>
-                    <div class="space-y-1">
-                        <a href="#" data-lesson-target="lesson-5" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 5: เริ่มใช้งาน Cisco IOS CLI</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">พร้อมเรียน</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-6" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 6: การตั้งค่าสวิตช์เบื้องต้น</span>
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">พร้อมเรียน</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-7" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 7: IP Management & SSH</span>
-                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-900 text-slate-500">เฟส 4</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-8" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 8: การตั้งค่า VLAN & Trunk</span>
-                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-900 text-slate-500">เฟส 4</span>
-                        </a>
-                        <a href="#" data-lesson-target="lesson-9" class="group flex items-center justify-between p-2.5 rounded-lg text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all">
-                            <span class="truncate">บทที่ 9: การกู้คืนรหัสผ่านสวิตช์</span>
-                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-900 text-slate-500">เฟส 5</span>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-            
-            <!-- Quick Reference Link -->
-            <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/40">
-                <a href="reference/cisco-switch-quick-reference.html" target="_blank" class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-semibold transition-all">
-                    📄 เปิด Quick Reference (PDF)
-                </a>
+          <!-- Group 2: Config -->
+          <div>
+            <h3
+              class="text-[13px] font-extrabold text-slate-800 dark:text-slate-400 uppercase tracking-wide mb-3 px-1.5"
+            >
+              กลุ่มที่ 2: การตั้งค่าอุปกรณ์ Cisco
+            </h3>
+            <div class="space-y-1">
+              <a
+                href="#"
+                data-lesson-target="lesson-5"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate">บทที่ 5: เริ่มใช้งาน Cisco IOS CLI</span>
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-6"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate">บทที่ 6: การตั้งค่าสวิตช์เบื้องต้น</span>
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-7"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate">บทที่ 7: IP Management & SSH</span>
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-8"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate">บทที่ 8: การตั้งค่า VLAN & Trunk</span>
+              </a>
+              <a
+                href="#"
+                data-lesson-target="lesson-9"
+                class="group flex items-center justify-between pl-5 pr-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900/40 text-sm transition-all"
+              >
+                <span class="truncate">บทที่ 9: การกู้คืนรหัสผ่านสวิตช์</span>
+              </a>
             </div>
-        </aside>
+          </div>
+        </nav>
 
-        <!-- Main Content Area -->
-        <main id="main-content-scroll" class="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50 dark:bg-deepnavy-950">
-            <div class="max-w-4xl mx-auto space-y-8 pb-12">
-                
-                <!-- Breadcrumbs & Heading -->
-                <div class="space-y-2">
-                    <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                        <span>หลักสูตร Cisco</span>
-                        <span>/</span>
-                        <span id="module-indicator" class="text-violet-600 dark:text-violet-400">ทฤษฎีระบบเครือข่าย</span>
-                    </div>
-                    <h1 id="lesson-title" class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        บทเรียนที่ 1: สถาปัตยกรรมแบบ Layer และ OSI Model L1-L2
-                    </h1>
-                    <p id="lesson-subtitle" class="text-slate-500 dark:text-slate-400 text-sm md:text-base">
-                        ทำความเข้าใจระดับชั้นการทำงานและโครงสร้างข้อมูลกายภาพกับโครงสร้างเชื่อมโยงทางฮาร์ดแวร์
-                    </p>
-                </div>
+        <!-- Quick Reference Link -->
+        <div
+          class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/40"
+        >
+          <a
+            href="reference/cisco-switch-quick-reference.html"
+            target="_blank"
+            class="w-full flex items-center justify-center gap-2 py-2 px-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-lg text-xs font-semibold transition-all"
+          >
+            📄 เปิด Quick Reference
+          </a>
+        </div>
+      </aside>
 
-                <!-- Main Study Content (Dynamic) -->
-                <div id="lesson-content" class="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 space-y-4">
-                    <!-- Loaded via app.js -->
-                </div>
-
-                <!-- Simulation/Visualization Box (Dynamic) -->
-                <div id="visualization-section" class="border-t border-b border-slate-200 dark:border-slate-800/80 py-6 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                                <span class="text-xl">📊</span> ระบบแสดงแอนิเมชันจำลองการทำงาน (Interactive Simulation)
-                            </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">กดปุ่มคำสั่งด้านล่างเพื่อเริ่มดูระบบจำลองการทำงานจริงในระบบเครือข่าย</p>
-                        </div>
-                    </div>
-                    <div id="visualization-box" class="w-full">
-                        <!-- Rendered via visualizer.js -->
-                    </div>
-                </div>
-
-                <!-- Self-Check Quiz Box -->
-                <div id="quiz-section" class="space-y-4">
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                            <span class="text-xl">📝</span> แบบทดสอบทบทวนความรู้ประจำบทเรียน (Self-Check Quiz)
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">แบบฝึกหัดทบทวนเพื่อสร้างความจำระยะยาวสำหรับการเรียนรู้</p>
-                    </div>
-                    <div id="quiz-box-container" class="w-full">
-                        <!-- Rendered via app.js -->
-                    </div>
-                </div>
-
-                <!-- Feedback Callout -->
-                <div class="p-4 rounded-xl border border-violet-500/20 bg-violet-500/5 dark:bg-violet-950/10 text-slate-600 dark:text-slate-400 text-xs flex gap-3 items-start">
-                    <span class="text-base">💬</span>
-                    <div>
-                        <strong>มีคำถามหรือจุดที่เรียนแล้วงงใช่ไหมครับ?</strong> 
-                        พิมพ์คำถามถาม Antigravity AI ครูผู้ช่วยเน็ตเวิร์กของคุณในแชทได้ทันทีครับ! ยินดีอธิบายพอร์ต คำสั่ง หรือกระบวนการห่อหุ้มข้อมูลเพิ่มเติมให้ฟังครับ
-                    </div>
-                </div>
-
+      <!-- Main Content Area -->
+      <main
+        id="main-content-scroll"
+        class="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50 dark:bg-deepnavy-950"
+      >
+        <div class="max-w-4xl mx-auto space-y-8 pb-12">
+          <!-- Breadcrumbs & Heading -->
+          <div class="space-y-2">
+            <div
+              class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400"
+            >
+              <span>หลักสูตร Cisco</span>
+              <span>/</span>
+              <span
+                id="module-indicator"
+                class="text-violet-600 dark:text-violet-400"
+                >ทฤษฎีระบบเครือข่าย</span
+              >
             </div>
-        </main>
+            <h1
+              id="lesson-title"
+              class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight"
+            >
+              บทเรียนที่ 1: สถาปัตยกรรมแบบ Layer และ OSI Model L1-L2
+            </h1>
+            <p
+              id="lesson-subtitle"
+              class="text-slate-700 dark:text-slate-300 text-sm md:text-base"
+            >
+              ทำความเข้าใจระดับชั้นการทำงานและโครงสร้างข้อมูลกายภาพกับโครงสร้างเชื่อมโยงทางฮาร์ดแวร์
+            </p>
+          </div>
 
+          <!-- Main Study Content (Dynamic) -->
+          <div
+            id="lesson-content"
+            class="prose prose-slate dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 space-y-4"
+          >
+            <!-- Loaded via app.js -->
+          </div>
+
+          <!-- Simulation/Visualization Box (Dynamic) -->
+          <div
+            id="visualization-section"
+            class="border-t border-b border-slate-200 dark:border-slate-800/80 py-6 space-y-4"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <h3
+                  class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2"
+                >
+                  <span class="text-xl">📊</span> ระบบแสดงแอนิเมชันจำลองการทำงาน
+                  (Interactive Simulation)
+                </h3>
+                <p class="text-xs text-slate-700 dark:text-slate-400 mt-0.5">
+                  กดปุ่มคำสั่งด้านล่างเพื่อเริ่มดูระบบจำลองการทำงานจริงในระบบเครือข่าย
+                </p>
+              </div>
+            </div>
+            <div id="visualization-box" class="w-full">
+              <!-- Rendered via visualizer.js -->
+            </div>
+          </div>
+
+          <!-- Self-Check Quiz Box -->
+          <div id="quiz-section" class="space-y-4">
+            <div>
+              <h3
+                class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2"
+              >
+                <span class="text-xl">📝</span> แบบทดสอบทบทวนความรู้ประจำบทเรียน
+                (Self-Check Quiz)
+              </h3>
+              <p class="text-xs text-slate-700 dark:text-slate-400 mt-0.5">
+                แบบฝึกหัดทบทวนเพื่อสร้างความจำระยะยาวสำหรับการเรียนรู้
+              </p>
+            </div>
+            <div id="quiz-box-container" class="w-full">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+
+          <!-- Dynamic References Section -->
+          <div id="references-section" class="space-y-4 hidden">
+            <!-- Rendered via app.js -->
+          </div>
+
+          <!-- Feedback Callout -->
+          <div
+            class="p-4 rounded-xl border border-violet-500/20 bg-violet-500/5 dark:bg-violet-950/10 text-slate-600 dark:text-slate-400 text-xs flex gap-3 items-start"
+          >
+            <span class="text-base">💬</span>
+            <div>
+              <strong>มีคำถามหรือจุดที่เรียนแล้วงงใช่ไหมครับ?</strong>
+              พิมพ์คำถามถาม Antigravity AI
+              ครูผู้ช่วยเน็ตเวิร์กของคุณในแชทได้ทันทีครับ! ยินดีอธิบายพอร์ต
+              คำสั่ง หรือกระบวนการห่อหุ้มข้อมูลเพิ่มเติมให้ฟังครับ
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
 
     <!-- Scripts -->
     <script src="assets/lessons.js"></script>
     <script src="assets/visualizer.js"></script>
     <script src="assets/app.js"></script>
-</body>
+  </body>
 </html>
