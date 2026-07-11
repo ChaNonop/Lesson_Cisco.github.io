@@ -1,0 +1,11 @@
+.agents/
+
+# Ignore all markdown files by default
+*.md
+**/*.md
+
+# Allow only these specific markdown files to be uploaded
+!README.md
+!docs/MISSION.md
+!docs/CONTEXT.md
+!docs/SUMMARY.md
